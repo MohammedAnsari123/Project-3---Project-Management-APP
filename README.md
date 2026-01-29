@@ -60,5 +60,5 @@ The application is divided into two main parts:
 Feel free to fork this project and submit pull requests. Ensure you update the documentation for any new features added.
 
 ---
-*Developed for Project Management Efficiency.*.
+*Developed for Project Management Efficiency.*
 *Developed by Developer Tester Designer Ansari Mohammed.*
