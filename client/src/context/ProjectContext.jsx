@@ -24,7 +24,7 @@ export const ProjectProvider = ({ children }) => {
     const fetchProjects = async () => {
         setLoading(true);
         try {
-            const { data } = await axios.get('https://project-3-project-management-app.onrender.com/api/projects', {
+            const { data } = await axios.get('/api/projects', {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             setProjects(data);
@@ -39,7 +39,7 @@ export const ProjectProvider = ({ children }) => {
 
     const createProject = async (projectData) => {
         try {
-            const { data } = await axios.post('https://project-3-project-management-app.onrender.com/api/projects', projectData, {
+            const { data } = await axios.post('/api/projects', projectData, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             setProjects((prev) => [...prev, data]);
@@ -52,7 +52,7 @@ export const ProjectProvider = ({ children }) => {
 
     const updateProject = async (id, projectData) => {
         try {
-            const { data } = await axios.put(`https://project-3-project-management-app.onrender.com/api/projects/${id}`, projectData, {
+            const { data } = await axios.put(`/api/projects/${id}`, projectData, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             setProjects((prev) => prev.map((p) => (p._id === id ? data : p)));
@@ -65,7 +65,7 @@ export const ProjectProvider = ({ children }) => {
 
     const deleteProject = async (id) => {
         try {
-            await axios.delete(`https://project-3-project-management-app.onrender.com/api/projects/${id}`, {
+            await axios.delete(`/api/projects/${id}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             setProjects((prev) => prev.filter((p) => p._id !== id));
