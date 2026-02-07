@@ -9,7 +9,7 @@ dotenv.config(); // Load env vars BEFORE importing config files that might use t
 const connectDB = require('./config/db');
 const passport = require('./config/passport'); // Import passport config
 
-connectDB();
+// connectDB(); // Connection handled in startServer
 
 const app = express();
 const server = http.createServer(app);
@@ -60,6 +60,16 @@ app.use('/uploads', express.static('uploads'));
 
 const PORT = process.env.PORT || 5000;
 
-server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+const startServer = async () => {
+    try {
+        await connectDB();
+        server.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error('Failed to connect to Database:', error);
+        process.exit(1);
+    }
+};
+
+startServer();
