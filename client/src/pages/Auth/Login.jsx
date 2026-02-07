@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
+import { API_URL } from '../../config';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -66,7 +67,7 @@ const Login = () => {
                 </div>
 
                 <a
-                    href="http://localhost:5000/api/auth/google"
+                    href={`${API_URL}/api/auth/google`}
                     className="flex items-center justify-center w-full px-4 py-2 mb-4 font-bold text-[#42526E] bg-white border border-gray-300 rounded-[3px] hover:bg-gray-50 transition-colors shadow-sm"
                 >
                     <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-4 h-4 mr-2" />

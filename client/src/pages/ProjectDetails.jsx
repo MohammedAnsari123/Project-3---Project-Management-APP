@@ -11,6 +11,7 @@ import TicketList from '../components/Project/TicketList';
 import ProjectTimeline from '../components/Project/ProjectTimeline';
 import ProjectPages from '../components/Project/ProjectPages';
 import io from 'socket.io-client';
+import { API_URL } from '../config';
 
 const ProjectDetails = () => {
     const { id, tab } = useParams();
@@ -40,7 +41,7 @@ const ProjectDetails = () => {
         fetchTickets();
 
         // Socket setup
-        const newSocket = io('http://localhost:5000');
+        const newSocket = io(API_URL);
         setSocket(newSocket);
         newSocket.emit('joinProject', id);
 
@@ -75,7 +76,7 @@ const ProjectDetails = () => {
 
     const fetchProject = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:5000/api/projects/${id}`, {
+            const { data } = await axios.get(`/api/projects/${id}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             setProject(data);
@@ -86,7 +87,7 @@ const ProjectDetails = () => {
 
     const fetchTickets = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:5000/api/tickets?projectId=${id}`, {
+            const { data } = await axios.get(`/api/tickets?projectId=${id}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             setTickets(data);

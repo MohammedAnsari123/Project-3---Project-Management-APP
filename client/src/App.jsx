@@ -9,6 +9,11 @@ import Dashboard from './pages/Dashboard';
 import ProjectDetails from './pages/ProjectDetails';
 import ProtectedRoute from './components/routing/ProtectedRoute';
 
+import { API_URL } from './config';
+import axios from 'axios';
+
+axios.defaults.baseURL = API_URL;
+
 function App() {
   return (
     <Router>
