@@ -1,5 +1,6 @@
 const Project = require('../models/Project');
 const User = require('../models/User');
+const { sendInvitationEmail, sendAddedNotification } = require('../utils/emailService');
 
 // @desc    Get all projects for the logged-in user
 // @route   GET /api/projects
@@ -84,7 +85,15 @@ const addMember = async (req, res) => {
             const userToAdd = await User.findOne({ email });
 
             if (!userToAdd) {
-                return res.status(404).json({ message: 'User not found' });
+                // User does not exist - Send Invitation Email
+                const inviteLink = `${process.env.CLIENT_URL || 'http://localhost:5173'}/register?email=${email}`;
+                const emailSent = await sendInvitationEmail(email, project.title, inviteLink);
+
+                if (emailSent) {
+                    return res.json({ message: `User not found. Invitation sent to ${email}` });
+                } else {
+                    return res.status(500).json({ message: 'User not found and failed to send invitation email.' });
+                }
             }
 
             // Check if user is already a member
@@ -99,6 +108,9 @@ const addMember = async (req, res) => {
             });
 
             const updatedProject = await project.save();
+
+            // Notify existing user
+            await sendAddedNotification(email, project.title);
 
             const projectWithMembers = await Project.findById(updatedProject._id)
                 .populate('owner', 'username email')

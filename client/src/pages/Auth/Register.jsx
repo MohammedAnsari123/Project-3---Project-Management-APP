@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 
 const Register = () => {
@@ -10,6 +10,15 @@ const Register = () => {
     const [error, setError] = useState('');
     const { register } = useContext(AuthContext);
     const navigate = useNavigate();
+    const location = useLocation();
+
+    React.useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const emailParam = params.get('email');
+        if (emailParam) {
+            setEmail(emailParam);
+        }
+    }, [location]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

@@ -20,8 +20,14 @@ const InviteMemberModal = ({ isOpen, onClose, project, onMemberAdded }) => {
                 { email, role },
                 { headers: { Authorization: `Bearer ${user.token}` } }
             );
-            onMemberAdded(data);
-            onClose();
+
+            if (data.members) {
+                onMemberAdded(data);
+                onClose();
+            } else {
+                alert(data.message || 'Invitation sent successfully!');
+                onClose();
+            }
             setEmail('');
             setRole('Member');
         } catch (err) {
