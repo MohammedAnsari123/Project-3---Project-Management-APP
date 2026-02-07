@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from '../../context/AuthContext';
+import { API_URL } from '../../config';
 
 const TicketModal = ({ isOpen, onClose, project, ticket, onTicketUpdated }) => {
     const { user } = useContext(AuthContext);
@@ -47,7 +48,7 @@ const TicketModal = ({ isOpen, onClose, project, ticket, onTicketUpdated }) => {
     const fetchComments = async () => {
         if (!ticket) return;
         try {
-            const { data } = await axios.get(`https://project-3-project-management-app.onrender.com/api/tickets/${ticket._id}/comments`, {
+            const { data } = await axios.get(`/api/tickets/${ticket._id}/comments`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             setComments(data);
@@ -65,7 +66,7 @@ const TicketModal = ({ isOpen, onClose, project, ticket, onTicketUpdated }) => {
             if (file) {
                 const uploadData = new FormData();
                 uploadData.append('file', file);
-                const uploadRes = await axios.post('https://project-3-project-management-app.onrender.com/api/tickets/upload', uploadData, {
+                const uploadRes = await axios.post('/api/tickets/upload', uploadData, {
                     headers: {
                         Authorization: `Bearer ${user.token}`,
                         'Content-Type': 'multipart/form-data'
@@ -81,7 +82,7 @@ const TicketModal = ({ isOpen, onClose, project, ticket, onTicketUpdated }) => {
                     updatedData.attachments = [...(ticket.attachments || []), uploadedFilePath];
                 }
 
-                const { data } = await axios.put(`https://project-3-project-management-app.onrender.com/api/tickets/${ticket._id}`, updatedData, {
+                const { data } = await axios.put(`/api/tickets/${ticket._id}`, updatedData, {
                     headers: { Authorization: `Bearer ${user.token}` },
                 });
                 onTicketUpdated(data);
@@ -93,7 +94,7 @@ const TicketModal = ({ isOpen, onClose, project, ticket, onTicketUpdated }) => {
                     attachments: uploadedFilePath ? [uploadedFilePath] : []
                 };
 
-                const { data } = await axios.post(`https://project-3-project-management-app.onrender.com/api/tickets`, newTicketData, {
+                const { data } = await axios.post(`/api/tickets`, newTicketData, {
                     headers: { Authorization: `Bearer ${user.token}` },
                 });
 
@@ -108,7 +109,7 @@ const TicketModal = ({ isOpen, onClose, project, ticket, onTicketUpdated }) => {
     const handleCommentSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post(`https://project-3-project-management-app.onrender.com/api/tickets/${ticket._id}/comments`, { content: comment }, {
+            const { data } = await axios.post(`/api/tickets/${ticket._id}/comments`, { content: comment }, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             setComments([...comments, data]);
@@ -282,9 +283,9 @@ const TicketModal = ({ isOpen, onClose, project, ticket, onTicketUpdated }) => {
                                                 return (
                                                     <div key={idx} className="relative group border border-slate-200 rounded-lg overflow-hidden bg-slate-100 p-1">
                                                         {isImage ? (
-                                                            <a href={`https://project-3-project-management-app.onrender.com${att}`} target="_blank" rel="noopener noreferrer" className="block h-24 w-full relative">
+                                                            <a href={`${API_URL}${att}`} target="_blank" rel="noopener noreferrer" className="block h-24 w-full relative">
                                                                 <img
-                                                                    src={`https://project-3-project-management-app.onrender.com${att}`}
+                                                                    src={`${API_URL}${att}`}
                                                                     alt={fileName}
                                                                     className="w-full h-full object-cover rounded"
                                                                 />
@@ -296,7 +297,7 @@ const TicketModal = ({ isOpen, onClose, project, ticket, onTicketUpdated }) => {
                                                                 </div>
                                                             </a>
                                                         ) : (
-                                                            <a href={`https://project-3-project-management-app.onrender.com${att}`} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center h-24 p-2 text-center text-slate-600 hover:text-blue-600 hover:bg-slate-200 transition-colors rounded">
+                                                            <a href={`${API_URL}${att}`} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center h-24 p-2 text-center text-slate-600 hover:text-blue-600 hover:bg-slate-200 transition-colors rounded">
                                                                 <svg className="w-8 h-8 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                                                 </svg>
