@@ -50,12 +50,11 @@ const Board = ({ project, tickets, setTickets, onTicketClick }) => {
             setTickets(prev => prev.map(t => t._id === activeId ? { ...t, status: newStatus } : t));
 
             try {
-                await axios.put(`https://project-3-project-management-app.onrender.com/api/tickets/${activeId}`,
+                await axios.put(`/api/tickets/${activeId}`,
                     { status: newStatus },
                     { headers: { Authorization: `Bearer ${user.token}` } }
                 );
             } catch (error) {
-                console.error('Update failed', error);
                 console.error('Update failed', error);
                 // Ideally trigger a refresh from parent or revert state manually
             }
@@ -69,7 +68,7 @@ const Board = ({ project, tickets, setTickets, onTicketClick }) => {
     const handleDeleteTicket = async (ticketId) => {
         if (!window.confirm('Are you sure you want to delete this ticket?')) return;
         try {
-            await axios.delete(`https://project-3-project-management-app.onrender.com/api/tickets/${ticketId}`, {
+            await axios.delete(`/api/tickets/${ticketId}`, {
                 headers: { Authorization: `Bearer ${user.token}` }
             });
             // Socket usually handles the update, but we can do optimistic update too

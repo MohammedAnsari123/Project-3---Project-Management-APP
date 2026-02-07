@@ -15,7 +15,7 @@ const UpdateRoleModal = ({ isOpen, onClose, project, member, onRoleUpdated }) =>
 
         try {
             const { data } = await axios.put(
-                `https://project-3-project-management-app.onrender.com/api/projects/${project._id}/members/${member.user._id}`,
+                `/api/projects/${project._id}/members/${member.user._id}`,
                 { role },
                 { headers: { Authorization: `Bearer ${user.token}` } }
             );

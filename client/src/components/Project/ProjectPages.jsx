@@ -16,7 +16,7 @@ const ProjectPages = ({ project }) => {
 
     const fetchPages = async () => {
         try {
-            const { data } = await axios.get(`https://project-3-project-management-app.onrender.com/api/pages/project/${project._id}`, {
+            const { data } = await axios.get(`/api/pages/project/${project._id}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             setPages(data);
@@ -39,14 +39,14 @@ const ProjectPages = ({ project }) => {
         try {
             if (selectedPage && selectedPage._id) {
                 // Update
-                const { data } = await axios.put(`https://project-3-project-management-app.onrender.com/api/pages/${selectedPage._id}`, { title, content }, {
+                const { data } = await axios.put(`/api/pages/${selectedPage._id}`, { title, content }, {
                     headers: { Authorization: `Bearer ${user.token}` },
                 });
                 setPages(prev => prev.map(p => p._id === data._id ? data : p));
                 setSelectedPage(data);
             } else {
                 // Create
-                const { data } = await axios.post(`https://project-3-project-management-app.onrender.com/api/pages`, {
+                const { data } = await axios.post(`/api/pages`, {
                     title,
                     content,
                     projectId: project._id
@@ -65,7 +65,7 @@ const ProjectPages = ({ project }) => {
     const handleDeletePage = async (pageId) => {
         if (!window.confirm("Are you sure you want to delete this page?")) return;
         try {
-            await axios.delete(`https://project-3-project-management-app.onrender.com/api/pages/${pageId}`, {
+            await axios.delete(`/api/pages/${pageId}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             setPages(prev => prev.filter(p => p._id !== pageId));
@@ -103,8 +103,8 @@ const ProjectPages = ({ project }) => {
                                 setIsEditing(false);
                             }}
                             className={`px-3 py-2 rounded-md text-sm cursor-pointer flex justify-between items-center group ${selectedPage && selectedPage._id === page._id
-                                    ? 'bg-blue-100 text-blue-700 font-medium'
-                                    : 'hover:bg-gray-100 text-gray-600'
+                                ? 'bg-blue-100 text-blue-700 font-medium'
+                                : 'hover:bg-gray-100 text-gray-600'
                                 }`}
                         >
                             <span className="truncate">{page.title}</span>
