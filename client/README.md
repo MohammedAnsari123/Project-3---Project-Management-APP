@@ -73,7 +73,7 @@ The frontend is built using the **MERN** stack (React focus) and modern tooling:
     ```
 
 3.  **Environment Configuration**:
-    Ensure you have the backend running on `http://localhost:5000` (default).
+    Ensure you have the backend running on `https://project-3-project-management-app.onrender.com` (default).
 
 4.  **Run Development Server**:
     ```bash

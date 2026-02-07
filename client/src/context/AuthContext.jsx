@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const { data } = await axios.post('http://localhost:5000/api/auth/login', {
+            const { data } = await axios.post('https://project-3-project-management-app.onrender.com/api/auth/login', {
                 email,
                 password,
             });
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (username, email, password) => {
         try {
-            const { data } = await axios.post('http://localhost:5000/api/auth/register', {
+            const { data } = await axios.post('https://project-3-project-management-app.onrender.com/api/auth/register', {
                 username,
                 email,
                 password,
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
                     Authorization: `Bearer ${token}`,
                 },
             };
-            const { data } = await axios.get('http://localhost:5000/api/auth/me', config);
+            const { data } = await axios.get('https://project-3-project-management-app.onrender.com/api/auth/me', config);
             // Combine profile data with token
             const userInfo = { ...data, token };
             setUser(userInfo);

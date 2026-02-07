@@ -16,7 +16,7 @@ const ProjectPages = ({ project }) => {
 
     const fetchPages = async () => {
         try {
-            const { data } = await axios.get(`http://localhost:5000/api/pages/project/${project._id}`, {
+            const { data } = await axios.get(`https://project-3-project-management-app.onrender.com/api/pages/project/${project._id}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             setPages(data);
@@ -39,14 +39,14 @@ const ProjectPages = ({ project }) => {
         try {
             if (selectedPage && selectedPage._id) {
                 // Update
-                const { data } = await axios.put(`http://localhost:5000/api/pages/${selectedPage._id}`, { title, content }, {
+                const { data } = await axios.put(`https://project-3-project-management-app.onrender.com/api/pages/${selectedPage._id}`, { title, content }, {
                     headers: { Authorization: `Bearer ${user.token}` },
                 });
                 setPages(prev => prev.map(p => p._id === data._id ? data : p));
                 setSelectedPage(data);
             } else {
                 // Create
-                const { data } = await axios.post(`http://localhost:5000/api/pages`, {
+                const { data } = await axios.post(`https://project-3-project-management-app.onrender.com/api/pages`, {
                     title,
                     content,
                     projectId: project._id
@@ -65,7 +65,7 @@ const ProjectPages = ({ project }) => {
     const handleDeletePage = async (pageId) => {
         if (!window.confirm("Are you sure you want to delete this page?")) return;
         try {
-            await axios.delete(`http://localhost:5000/api/pages/${pageId}`, {
+            await axios.delete(`https://project-3-project-management-app.onrender.com/api/pages/${pageId}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
             setPages(prev => prev.filter(p => p._id !== pageId));

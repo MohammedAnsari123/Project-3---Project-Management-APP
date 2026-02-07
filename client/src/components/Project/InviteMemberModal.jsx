@@ -16,7 +16,7 @@ const InviteMemberModal = ({ isOpen, onClose, project, onMemberAdded }) => {
 
         try {
             const { data } = await axios.put(
-                `http://localhost:5000/api/projects/${project._id}/members`,
+                `https://project-3-project-management-app.onrender.com/api/projects/${project._id}/members`,
                 { email, role },
                 { headers: { Authorization: `Bearer ${user.token}` } }
             );
